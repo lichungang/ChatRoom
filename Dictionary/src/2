@@ -1,0 +1,73 @@
+/*************************************************************************
+	> File Name: dictionary.c
+	> Author: lichungang
+	> Mail: 710901221@qq.com
+	> Created Time: 2014年12月08日 星期一 15时58分35秒
+ ************************************************************************/
+/*
+ *英汉小词典
+ * */
+
+#include"Dictionary.h"
+
+void InitDic()
+{
+	puts("-------------------------英汉小词典----------------------------\n");
+	puts("1 查询单词 \n");
+	puts("2 添加单词 \n");
+	puts("3 删除单词 \n");
+	puts("4 单词本\n");
+	puts("5 退出使用\n");
+	puts("---------------------------------------------------------------\n");
+}
+
+void SelectFunc(int Fd)
+{
+	int a;
+	puts("请输入您所要使用的功能");
+
+	while(1)
+	{
+		scanf("%d",&a);
+		switch(a)
+		{
+			case 1: ReferWord(Fd);
+					break;
+			case 2: InsertWord();
+				   break;
+			case 3: DelectWord();
+					break;
+			case 4: WordsBook();
+					break;
+			case 5:puts("感谢您的使用，期待您下次继续使用");
+				   exit(0);	
+
+			default:puts("输入错误，请重输");
+		}
+	}
+
+}
+int main(void)
+{
+	int Fd;
+	int ret;
+	InitDic();
+	
+	Fd = open("./../log/DictionaryFile.txt",O_RDWR | 0666);
+	if(Fd < 0)
+	{
+		perror("打开文件失败");
+		return -1;
+	}
+
+	SelectFunc(int Fd);
+	
+	ret = close(Fd);
+	if(ret < 0)
+	{
+		perror("关闭文件失败");
+		return -2;
+	}
+	return 0;
+}
+
